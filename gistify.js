@@ -172,8 +172,12 @@ Gist.prototype = {
     this.$element.css('width', this.config.width);
 
     // render description
-    var processedTemplate = DESC_TEMPLATE.replace('{{content}}', this.data.description);
-    this.$element.empty().append(processedTemplate);
+    if(this.config.description){
+      var processedTemplate = DESC_TEMPLATE.replace('{{content}}', this.data.description);
+      this.$element.empty().append(processedTemplate);
+      
+      if(this.config.mode == 'show')
+    }
 
     // render each file
     for (var fileName in this.data.files) {
