@@ -223,20 +223,25 @@ Gist.prototype = {
     var $loadingGif = $(loadingHtml).appendTo(this.$element);
 
     if(this.config.mode != 'create') {
-      
-      $.getJSON(GIST_API_URL + '/' + this.config.gistId , function(data) {
-        data.time = (new Date()).getTime();
-        gist.data = data;
 
-        waitForAceAndDo(gist.render);
-      })
-      .error(function(jqXHR,textStatus, errorThrown) {
-        if(jqXHR.status == 404) {
-          console.error('No such gist found.');
-          $loadingGif.replaceWith(GIST_404);
-        }
-        else {
-          console.error(jqXHR,textStatus, errorThrown);
+      $.ajax({
+        url: GIST_API_URL + '/' + this.config.gistId,
+        dataType: 'json',
+        cache: false,
+        success: function(data) {
+          data.time = (new Date()).getTime();
+          gist.data = data;
+
+          waitForAceAndDo(gist.render);
+        },
+        error: function(jqXHR,textStatus, errorThrown) {
+          if(jqXHR.status == 404) {
+            console.error('No such gist found.');
+            $loadingGif.replaceWith(GIST_404);
+          }
+          else {
+            console.error(jqXHR,textStatus, errorThrown);
+          }
         }
       });
     }
@@ -263,8 +268,13 @@ Gist.prototype = {
       throw new GistifyError('This Gist is already rendered!');
     }
 
+    var readonly = this.config.mode == 'show';
+
+    // edit and create modes uses the same template
+    var templateMode = this.config.mode == 'show' ? 'show' : 'edit';
+
     // bind events
-    // `gistify.numberOfFilesChanged` should be binded before `addEmptyFile`
+    // `gistify.numberOfFilesChanged` should be binded before `addFile`
     // so all bindings done here in sake of grouping
     this.$element.off();
     this.$element.on('click', '.gistify-remove-btn', this, this.onDeleteFile);
@@ -275,12 +285,6 @@ Gist.prototype = {
     this.$element.on('gistify.numberOfFilesChanged', this, this.onNumberOfFilesChanged);
     this.$element.on('gistify.tokenChanged', this, this.onTokenChanged);
     
-
-    var readonly = this.config.mode == 'show';
-
-    // edit and create modes uses the same template
-    var mode = this.config.mode == 'show' ? 'show' : 'edit';
-
     // Set width of main container (target element)
     this.$element.css('width', this.config.width);
 
@@ -290,7 +294,7 @@ Gist.prototype = {
     // if not in readonly mode then the description should be edeitable
     if(this.config.description || !readonly) {
       var description = this.data && this.data.description ? this.data.description : ''; // in create mode data is undefined 
-      var processedTemplate = DESC_TEMPLATE[mode]
+      var processedTemplate = DESC_TEMPLATE[templateMode]
                   .replace('{{readonly}}', readonly ? 'readonly' : '')
                   .replace('{{content}}', description);
 
@@ -300,78 +304,68 @@ Gist.prototype = {
     // render the editor(s)
     // --------------------
     if(this.config.mode == 'create') {
-      this.addEmptyFile();
+      this.addFile(this.config.mode, {});
     }
     else { // then there is data to be rendered
       // render each file
       for (var fileName in this.data.files) {
         if (this.data.files.hasOwnProperty(fileName)) {
           var file = this.data.files[fileName];
-          processedTemplate = FILE_TEMPLATE[mode]
-                    .replace('{{fileName}}', fileName)
-                    .replace('{{rawUrl}}', file.raw_url)
-                    .replace('{{permalink}}', this.data.html_url);
-
-          var $fileDomElement = $(processedTemplate).appendTo(this.$element);
-          // $fileDomElement.css('height', this.config.height);
-
-          // FIXME spaghetti?
-          if(this.config.mode == 'show' && this.config.showSimple) {
-            $fileDomElement.find('.gistify-file-header').remove();
-          }
-
-          var editor = ace.edit($fileDomElement.find('.gistify-data').get(0));
-          var editorMode = modelist.getModeForPath(file.filename);
-          editor.setValue(file.content, -1);
-          editor.getSession().setMode(editorMode.mode);
-          editor.setReadOnly(readonly);
-          editor.setOptions(this.config.aceOptions);
-          editor.setTheme('ace/theme/' + this.config.theme);
-          editor.renderer.setScrollMargin(10, 10);
-
-          $.data($fileDomElement[0], 'gistify-aceEditor', editor);
+          this.addFile(this.config.mode, file);
         }
       }
-
-      this.$element.trigger('gistify.numberOfFilesChanged');
     }
-
+    
     // render footer
     if(!readonly) {
       var btnAction = this.config.mode == 'create' ? localize('Save') : localize('Update');
       this.$element.append(FOOTER_TEMPLATE.replace('{{action}}', btnAction));
     }
 
+    this.$element.trigger('gistify.numberOfFilesChanged');
+
     // Triggger tokenChanged here on behalf of 'restoreToken' because restoreToken's
     // event couldn't be processed since back then there were no rendered element.
     this.$element.trigger('gistify.tokenChanged');
-
   },
 
-  addEmptyFile: function () {
+  addFile: function (mode, file) {
+
+    var readonly = this.config.mode == 'show';
+
+    // edit and create modes uses the same template
+    var templateMode = this.config.mode == 'show' ? 'show' : 'edit';
+
+    var processedTemplate = FILE_TEMPLATE[templateMode]
+              .replace(/{{fileName}}/g, file.filename || '')
+              .replace('{{rawUrl}}', file.raw_url || '#')
+              .replace('{{permalink}}', (this.data && this.data.html_url ? this.data.html_url : '#'));
 
     var appendTarget = this.$element.find('.gistify-file').size() > 0 
                       ? this.$element.find('.gistify-file').last()
                       : this.$element.find('.gistify-description');
 
-    var processedTemplate = FILE_TEMPLATE['edit']
-                .replace('{{fileName}}', '')
-                .replace('{{rawUrl}}', '#')
-                .replace('{{permalink}}', '#');
-
     var $fileDomElement = $(processedTemplate).insertAfter(appendTarget);
 
-    // $fileDomElement.css('height', this.config.height);
+    // handle showSimple
+    if(this.config.mode == 'show' && this.config.showSimple) {
+      $fileDomElement.find('.gistify-file-header').remove();
+    }
 
     var editor = ace.edit($fileDomElement.find('.gistify-data').get(0));
-
+    
+    if(mode != 'create') {// in edit and show modes
+      var editorMode = modelist.getModeForPath(file.filename);
+      editor.setValue(file.content, -1);
+      editor.getSession().setMode(editorMode.mode);
+    }
+    
+    editor.setReadOnly(readonly);
     editor.setOptions(this.config.aceOptions);
     editor.setTheme('ace/theme/' + this.config.theme);
     editor.renderer.setScrollMargin(10, 10);
 
     $.data($fileDomElement[0], 'gistify-aceEditor', editor);
-
-    this.$element.trigger('gistify.numberOfFilesChanged');
   },
 
   onSaveOrUpdate: function (e) {
@@ -395,8 +389,9 @@ Gist.prototype = {
         url: url,
         headers: headers,
         data: JSON.stringify(gist.toObject()),
-        contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        contentType: 'application/json; charset=utf-8',
+        dataType: 'json',
+        cache: false,
         success: function (data, textStatus, jqXHR) {
           var id = data.id;
 
@@ -415,6 +410,9 @@ Gist.prototype = {
          
           gist.data = data;
           gist.config.gistId = data.id;
+
+          // clear deleted files
+          delete gist.deleted;
 
           // even if it's in edit mode and just updated, re-render to avoid complex
           // internal data sync operations
@@ -441,7 +439,8 @@ Gist.prototype = {
 
   onNewFile: function (e) {
     var gist = e.data;
-    gist.addEmptyFile();
+    gist.addFile('create', {});
+    gist.$element.trigger('gistify.numberOfFilesChanged');
   },
 
   onDeleteFile: function (e) {
@@ -451,7 +450,14 @@ Gist.prototype = {
       $(this).closest('.gistify-file').remove();
       gist.$element.trigger('gistify.numberOfFilesChanged');
 
-      debugger
+      var originalFileName = $(this).closest('.gistify-file').data('file-name');
+      
+      // if this file is not local, then remember that it's deleted
+      if(gist.config.mode == 'edit' && gist.data.files[originalFileName]) {
+        gist.deleted = gist.deleted || [];
+        gist.deleted.push(originalFileName);
+      }
+
     }
   },
 
@@ -522,10 +528,26 @@ Gist.prototype = {
 
       var aceEditor = $.data($item[0], 'gistify-aceEditor');
       file.content = aceEditor.getValue();
-      var fileName = $item.find('.gistify-filename').val();
+
+      var fileName = $item.find('.gistify-filename').val().trim();
       fileName = fileName.length ? fileName : localize('New file ' + i);
 
+      // handle rename, see https://developer.github.com/v3/gists/#edit-a-gist
+      var originalFileName = $item.data('file-name');
+      if(this.config.mode == 'edit' && originalFileName != fileName) {
+        file.filename = fileName;
+        fileName = originalFileName;
+      }
+
       files[fileName] = file;
+    }
+
+    // add deleted files
+    if(this.deleted) {
+      for (var i = this.deleted.length - 1; i >= 0; i--) {
+        var deletedFilename = this.deleted[i];
+        files[deletedFilename] = null;
+      };
     }
 
     return {
