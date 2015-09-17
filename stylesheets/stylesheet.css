@@ -392,3 +392,9 @@ button:hover {
 h1,h2,h3,h4,h5,h6 {
   color: #003d54;
 }
+ul, ol, dl {
+  padding-left: 20px;
+}
+ul li {
+  padding-left: 3px;
+}
