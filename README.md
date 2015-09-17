@@ -72,6 +72,10 @@ $('#target').gistify({
 })
 ```
 
+### TODOs & Known Issues
+
+* file delete on update should be handled
+* handle filename change
 
 ## License
 
