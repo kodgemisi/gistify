@@ -69,9 +69,11 @@ var FOOTER_TEMPLATE = '\
 <div class="gistify-footer">\
   <button class="gistify-new-btn gistify-btn">' + localize('New File') + ' </button>\
   <button class="gistify-token-btn gistify-btn">' + localize('Set Github token') + '&nbsp;&nbsp;&nbsp;<span class="octicon octicon-stop"></span></button>\
-  <a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/" target="_blank" title="Help about tokens" class="gistify-token-help gistify-btn"><span class="octicon gistify-icon-show octicon-light-bulb"></span></a>\
+  <a href="http://kodgemisi.github.io/gistify/token-help.html" target="_blank" title="Help about tokens" class="gistify-token-help gistify-btn"><span class="octicon gistify-icon-show octicon-light-bulb"></span></a>\
   <button class="gistify-save-btn gistify-btn gistify-btn-primary">{{action}}</button>\
 </div>'
+
+var GITHUB_GIST_EMBED_TEMPLATE = '<script src="https://gist.github.com/{{id}}.js"></script>';
 
 // CSS injection
 if($('#gistify-style').length == 0){
@@ -145,7 +147,8 @@ function Gist(element, options) {
 Gist.prototype = {
   defaults: {
     mode: '', // 'create' | 'show' | 'edit'. Note that if 'gistId' is present then 'show' is default, if 'gistId' is not present 'create' is default
-    description: false, // description: false by default in 'show' mode true by default in 'create' and 'edit' modes
+    description: false, // description: false by default and only effective in show mode
+    showSimple: false, // shows the gists without headers. Only effective in show mode
     height: '',
     width: '100%',
     theme: 'github',
@@ -308,6 +311,11 @@ Gist.prototype = {
 
           var $fileDomElement = $(processedTemplate).appendTo(this.$element);
           // $fileDomElement.css('height', this.config.height);
+
+          // FIXME spaghetti?
+          if(this.config.mode == 'show' && this.config.showSimple) {
+            $fileDomElement.find('.gistify-file-header').remove();
+          }
 
           var editor = ace.edit($fileDomElement.find('.gistify-data').get(0));
           var editorMode = modelist.getModeForPath(file.filename);
