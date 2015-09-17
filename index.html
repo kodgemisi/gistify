@@ -49,119 +49,20 @@
 <main>
 	<h1>Gistify jQuery gist Plugin Demo Page</h1>
 
-	<a href="http://kodgemisi.github.io/gistify/">« Return to Plugin Home</a>
-
-	<p><strong>A few reminders</strong></p>
-	<ul>
-		<li>You can mix javascipt options and data-attributes</li>
-		<li>data-attributes has priority over javascript options when same option present in both</li>
-		<li>You can see & test available themes <a href="http://ace.c9.io/build/kitchen-sink.html" target="_blank">here</a></li>
-		<li>
-			You can generate a <em>personal Github token</em> <a href="https://github.com/settings/tokens/new" target="_blank">here</a>
-			<ul>
-				<li>Don't forget to give <em>gist</em> permission</li>
-				<li>Detailed explanation <a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/" target="_blank">here</a></li>
-			</ul>
-		</li>
-	</ul>
-
-	<h2>Gistify in Action</h2>
-
-	<fieldset>
-		<legend>Show Mode Examples</legend>
-
-		<ul>
-			<li><a href="#basic-usage">Basic Usage</a></li>
-			<li><a href="#js-usage">Javascript Options Usage</a></li>
-			<li><a href="#data-attributes">HTML Data Attributes Usage</a></li>
-		</ul>
-	</fieldset>
-	<br>
-	<fieldset>
-		<legend>Create Mode Examples</legend>
-
-		<ul>
-			<li><a href="#basic-usage">Basic Usage</a></li>
-			<li><a href="#js-usage">Javascript Options Usage</a></li>
-			<li><a href="#data-attributes">HTML Data Attributes Usage</a></li>
-		</ul>
-	</fieldset>
-	<br>
-	<fieldset>
-		<legend>Edit Mode Examples</legend>
-
-		<ul>
-			<li><a href="#basic-usage">Basic Usage</a></li>
-			<li><a href="#js-usage">Javascript Options Usage</a></li>
-			<li><a href="#data-attributes">HTML Data Attributes Usage</a></li>
-		</ul>
-	</fieldset>
-
-	<article>
-		<h3 id="basic-usage">Basic Usage</h3>
-		<code>
-HTML
--------
-<div id="target1" data-gist-id="0a20740f38b6bd8f2d6e"></div>
-
-JS
--------
-$('#target1').gistify();
-		</code>
-		<button id="btn1">Show Basic Usage</button>
-		<hr>
-
-		<div id="target1" data-gist-id="0a20740f38b6bd8f2d6e"></div>
-	</article>
-
 	<article>
 		<h3 id="js-usage">Javascript Options Usage</h3>
-		<code>
-HTML
--------
-<div id="target2"></div>
 
-JS
--------
-$('#target2').gistify(parsedOptions);
-		</code>
 		<label>Options</label><br>
-		<textarea id="options1" class="oneThirdWith"></textarea><br>
-		<button id="btn2">Show Javascript Options Usage</button>
+		<textarea id="options" class="oneThirdWith"></textarea><br>
+		<button id="btn1">Show Javascript Options Usage</button>
 		<hr>
 
-		<div id="target2"></div>
+		<div id="target"></div>
 	</article>
 
-	<article>
-		<h3 id="data-attributes">HTML Data Attributes Usage</h3>
-		<code>
-HTML
--------
-<div id="target3" data-gist-id="0a20740f38b6bd8f2d6e"></div>
-
-JS
--------
-$('#target3').gistify();
-		</code>
-		<button id="btn3">Show Data Attributes Usage</button>
-		<hr>
-
-		<div id="target3" data-gist-id="0a20740f38b6bd8f2d6e"></div>
-	</article>
 
 </main>
 	<script type="text/javascript">
-
-		// render <code> tags as code samples
-		$('code').each(function () {
-			var s = '';
-			$(this).contents().each(function(i, data) {
-				s += data.nodeValue || data.outerHTML;
-			});
-
-			$(this).text(s);
-		});
 
 		// Set example options
 		var exampleOptions = {
@@ -170,26 +71,19 @@ $('#target3').gistify();
 			description: true,
 			theme: 'eclipse'
 		};
-		$('#options1')
+
+		$('#options')
 			.val(JSON.stringify(exampleOptions, null, '  '))
-			.css('height', $('#options1')[0].scrollHeight+'px');
+			.css('height', $('#options')[0].scrollHeight+'px');
 
-		// click event bindings
 		$('#btn1').click(function() {
-			$('#target1').gistify();
-		});
-
-		$('#btn2').click(function() {
 			// need to reset the DOM object in order to re-initialize it from scratch
-			$('#target2').replaceWith('<div id="target2"></div>');
+			$('#target').replaceWith('<div id="target"></div>');
 
-			var options = JSON.parse($('#options1').val());
-			$('#target2').gistify(options);
+			var options = JSON.parse($('#options').val());
+			$('#target').gistify(options);
 		});
 
-		$('#btn3').click(function() {
-			$('#target3').gistify();
-		});
 	</script>
 
 </body>
