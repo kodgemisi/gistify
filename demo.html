@@ -15,33 +15,12 @@
     <script src="gistify.js"></script>
 
     <style type="text/css">
-      main {
-        width: 70%;
-        margin: auto;
-      }
-      a, a:visited, a:active {
-        color: #003d54;
-      }
-      a:hover {
-        color: #348488;
-      }
-      button {
-        border: 1px solid #ccc;
-        border-radius: 3px;
-        color: #222;
-        padding: 5px;
-      }
-      button:hover {
-        border: 1px solid #aaa;
-      }
-      .oneThirdWith {
-        width: 33%;
-      }
       code {
-        display: block;
-        padding: 5px;
         background-color: #f8f8f8;
-        margin: 10px;
+        display: block;
+        font-family: monospace;
+        padding: 0 5px;
+        margin: 10px 0;
         white-space: pre;
       }
     </style>
@@ -65,9 +44,9 @@
         <hr>
 
         <section id="main_content">
-  <a href="http://kodgemisi.github.io/gistify/">« Return to Plugin Home</a>
+  <p><a href="http://kodgemisi.github.io/gistify/">« Return to Plugin Home</a></p>
 
-  <p><strong>A few reminders</strong></p>
+  <strong>A few reminders</strong>
   <ul>
     <li>You can mix javascipt options and data-attributes</li>
     <li>data-attributes has priority over javascript options when same option present in both</li>
@@ -75,43 +54,24 @@
     <li>
       You can generate a <em>personal Github token</em> <a href="https://github.com/settings/tokens/new" target="_blank">here</a>
       <ul>
-        <li>Don't forget to give <em>gist</em> permission</li>
+        <li>Don't forget to give <em>gist</em> permission. This plugin only requires gist permission.</li>
         <li>Detailed explanation <a href="https://help.github.com/articles/creating-an-access-token-for-command-line-use/" target="_blank">here</a></li>
       </ul>
     </li>
   </ul>
 
+  <p>Here is a <a href="http://jsfiddle.net/" target="_blank">jsFiddle</a> for you to play around :)</p>
+
   <h2>Gistify in Action</h2>
 
-  <fieldset>
-    <legend>Show Mode Examples</legend>
-
-    <ul>
-      <li><a href="#basic-usage">Basic Usage</a></li>
-      <li><a href="#js-usage">Javascript Options Usage</a></li>
-      <li><a href="#data-attributes">HTML Data Attributes Usage</a></li>
-    </ul>
-  </fieldset>
-  <br>
-  <fieldset>
-    <legend>Create Mode Examples</legend>
-
-    <ul>
-      <li><a href="#basic-usage">Basic Usage</a></li>
-      <li><a href="#js-usage">Javascript Options Usage</a></li>
-      <li><a href="#data-attributes">HTML Data Attributes Usage</a></li>
-    </ul>
-  </fieldset>
-  <br>
-  <fieldset>
-    <legend>Edit Mode Examples</legend>
-
-    <ul>
-      <li><a href="#basic-usage">Basic Usage</a></li>
-      <li><a href="#js-usage">Javascript Options Usage</a></li>
-      <li><a href="#data-attributes">HTML Data Attributes Usage</a></li>
-    </ul>
-  </fieldset>
+  <strong>Examples</strong>
+  <ul>
+    <li><a href="#basic-usage">Basic Usage</a></li>
+    <li><a href="#js-usage">Javascript Options Usage</a></li>
+    <li><a href="#data-attributes">HTML Data Attributes Usage</a></li>
+    <li><a href="#create-usage">Creating a new gist</a></li>
+    <li><a href="#edit-usage">Editing your gist</a></li>
+  </ul>
 
   <article>
     <h3 id="basic-usage">Basic Usage</h3>

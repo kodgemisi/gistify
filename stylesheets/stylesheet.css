@@ -371,3 +371,24 @@ footer a:hover {
 
 /* Mobile Portrait Size to Mobile Landscape Size (devices and browsers) */
 @media only screen and (max-width: 479px) { }
+
+/*KodGemisi overrides*/
+a, a:visited, a:active {
+  color: #003d54;
+}
+a:hover {
+  color: #348488;
+}
+button {
+  background-color: #efefef;
+  border: 1px solid #ccc;
+  border-radius: 3px;
+  color: #222;
+  padding: 5px;
+}
+button:hover {
+  border: 1px solid #aaa;
+}
+h1,h2,h3,h4,h5,h6 {
+  color: #003d54;
+}
