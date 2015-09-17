@@ -96,6 +96,11 @@ input.gistify-filename {
   color:#333;
 }
 
+.gistify-button-group a[href="#"] {
+  pointer-events: none;
+  cursor: default;
+}
+
 .gistify-button-group li {
   border-left:1px solid #d8d8d8;
   float:left;
