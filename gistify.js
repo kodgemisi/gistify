@@ -144,9 +144,9 @@ function Gist(element, options) {
 
 Gist.prototype = {
   defaults: {
-    mode: 'show', // first run: 'create' | 'show' | 'edit' # not first run: 'save' | 'get'
-    description: false,
-    height: '300px',
+    mode: '', // 'create' | 'show' | 'edit'. Note that if 'gistId' is present then 'show' is default, if 'gistId' is not present 'create' is default
+    description: false, // description: false by default in 'show' mode true by default in 'create' and 'edit' modes
+    height: '',
     width: '100%',
     theme: 'github',
     aceOptions: {
@@ -177,7 +177,7 @@ Gist.prototype = {
 
     this.config = {};
 
-    // call this before options reading so that
+    // call this before reading options so that
     // options can override it
     this.restoreToken();
 
@@ -185,9 +185,26 @@ Gist.prototype = {
     // globally or using an object literal.
     this.config = $.extend(this.config, this.defaults, this.options, this.metadata);
 
-    // options validation
+    // set default mode
     if(!this.config.mode){
-      throw new GistifyError('"mode" cannot be empty, you need to specify a "mode"!');
+      if(this.config.gistId) {
+      	this.config.mode = 'show';
+      }
+      else {
+      	this.config.mode = 'create';
+      }
+    }
+
+    // set minLines property for 'create' and 'edit' modes
+    if(this.config.mode != 'show') {
+    	this.config.aceOptions.minLines = 13;
+    }
+
+    // options validation
+    // ==================
+    var possibleModes = ['show', 'create', 'edit'];
+    if(possibleModes.indexOf(this.config.mode) < 0){
+      throw new GistifyError('"' + this.config.mode + '" is not a valid mode, possible modes are: ' + possibleModes.join(', '));
     }
 
     if(this.config.mode == 'create' && this.config.gistId){
@@ -337,8 +354,7 @@ Gist.prototype = {
 
     var editor = ace.edit($fileDomElement.find('.gistify-data').get(0));
 
-    // add minLines when adding empty editor to make it more useful
-    editor.setOptions($.extend({}, this.config.aceOptions, {minLines: 13}));
+    editor.setOptions(this.config.aceOptions);
     editor.setTheme('ace/theme/' + this.config.theme);
     editor.renderer.setScrollMargin(10, 10);
 
@@ -349,6 +365,11 @@ Gist.prototype = {
 
   onSaveOrUpdate: function (e) {
     var gist = e.data;
+
+    if(gist.config.mode == 'edit' && !gist.config.githubToken) {
+    	alert('You need to set your Github token to update gists.');
+    	return;
+    }
 
     if(gist.config.githubToken || confirm('You are creating an anonymous gist. Continue?')) {
       
@@ -367,15 +388,18 @@ Gist.prototype = {
         dataType: "json",
         success: function (data, textStatus, jqXHR) {
           var id = data.id;
-          console.log(data);
 
           delete data['forks'];
           delete data['history'];
           delete data['owner'];
 
           // if the gist is created then re-render in edit mode
-          if(gist.config.mode == 'create'){
+          if(gist.config.mode == 'create') {
             gist.config.mode = 'edit';
+            alert(localize('Gist created.'));
+          }
+          else {
+          	alert(localize('Gist updated.'));
           }
          
           gist.data = data;
@@ -438,7 +462,7 @@ Gist.prototype = {
     // Allow user to remove token by writing explicitly null
     newToken = (newToken == 'null' ? undefined : newToken);
 
-    gist.config.githubToken = newToken || newToken == undefined ? newToken : gist.config.githubToken;
+    gist.config.githubToken = newToken || newToken === undefined ? newToken : gist.config.githubToken;
 
     localStorage.setItem('gistify.token', gist.config.githubToken);
 
