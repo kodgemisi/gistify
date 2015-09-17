@@ -50,7 +50,7 @@ var FILE_TEMPLATE = {
 </div>',
 
   edit: '\
-<div class="gistify-file">\
+<div class="gistify-file" data-file-name="{{fileName}}">\
   <div class="gistify-file-header-edit">\
   <span>\
     <input type="text" class="gistify-filename" value="{{fileName}}" placeholder="Filename including extension…" />\
@@ -271,8 +271,10 @@ Gist.prototype = {
     this.$element.on('click', '.gistify-new-btn', this, this.onNewFile);
     this.$element.on('click', '.gistify-save-btn', this, this.onSaveOrUpdate);
     this.$element.on('click', '.gistify-token-btn', this, this.onSetToken);
+    // this.$element.on('changed', '.gistify-filename', this, this.onFileNameChanged);// this doesn't propogate need to bind to the element itself
     this.$element.on('gistify.numberOfFilesChanged', this, this.onNumberOfFilesChanged);
     this.$element.on('gistify.tokenChanged', this, this.onTokenChanged);
+    
 
     var readonly = this.config.mode == 'show';
 
@@ -448,6 +450,8 @@ Gist.prototype = {
     if(confirm('Delete this file?')) {
       $(this).closest('.gistify-file').remove();
       gist.$element.trigger('gistify.numberOfFilesChanged');
+
+      debugger
     }
   },
 
@@ -486,6 +490,11 @@ Gist.prototype = {
 
     var $tokenIcon = gist.$element.find('.gistify-token-btn .octicon').attr('title', title);
     $tokenIcon.removeClass('octicon-check octicon-stop').addClass(iconClass);
+  },
+
+  onFileNameChanged: function (e) {
+    var gist = e.data;
+    debugger
   },
 
   restoreToken: function () {

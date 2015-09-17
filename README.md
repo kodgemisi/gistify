@@ -75,7 +75,7 @@ $('#target').gistify({
 ### TODOs & Known Issues
 
 * file delete on update should be handled
-* handle filename change
+* handle filename change (need to refactor code to avoid code duplication in rendering phase)
 
 ## License
 
