@@ -451,7 +451,7 @@ Gist.prototype = {
     var title = gist.config.githubToken ? localize('Token is set') : localize('Token is NOT set');
     var iconClass = gist.config.githubToken ? 'octicon-check' : 'octicon-stop';
 
-    var $tokenIcon = gist.$element.attr('title', title).find('.gistify-token-btn .octicon');
+    var $tokenIcon = gist.$element.find('.gistify-token-btn .octicon').attr('title', title);
     $tokenIcon.removeClass('octicon-check octicon-stop').addClass(iconClass);
   },
 
