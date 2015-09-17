@@ -29,7 +29,7 @@ var DESC_TEMPLATE = {
 <div class="gistify-description">\
   <div class="gistify-bubble">\
   <div class="gistify-gist-desc-container">\
-    <textarea class="gistify-gist-desc" placeholder="Gist açıklaması..." {{readonly}}>{{content}}</textarea>\
+    <textarea class="gistify-gist-desc" placeholder="Gist description…" {{readonly}}>{{content}}</textarea>\
   </div>\
   </div>\
 </div>'
