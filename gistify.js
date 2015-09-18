@@ -360,6 +360,10 @@ Gist.prototype = {
       editor.setValue(file.content, -1);
     }
     
+    if(readonly) {
+      editor.getSession().setOption("useWorker", false);
+    }
+
     editor.setReadOnly(readonly);
     editor.setOptions(this.config.aceOptions);
     editor.setTheme('ace/theme/' + this.config.theme);

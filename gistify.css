@@ -3,6 +3,19 @@
   min-height: 64px;
 }
 
+.ace_gutter-cell {
+  padding-left: 10px !important;
+}
+
+.ace_gutter-cell.ace_info {
+  background-position: -3px center !important;
+}
+
+.ace_gutter-cell.ace_error {
+  background-position: -1px center !important;
+  background-size: 13px 13px !important;
+}
+
 .gistify-file {
   margin-bottom: 1em;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
