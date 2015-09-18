@@ -281,7 +281,7 @@ Gist.prototype = {
     this.$element.on('click', '.gistify-new-btn', this, this.onNewFile);
     this.$element.on('click', '.gistify-save-btn', this, this.onSaveOrUpdate);
     this.$element.on('click', '.gistify-token-btn', this, this.onSetToken);
-    // this.$element.on('changed', '.gistify-filename', this, this.onFileNameChanged);// this doesn't propogate need to bind to the element itself
+    this.$element.on('change', '.gistify-filename', this, this.onFileNameChanged);
     this.$element.on('gistify.numberOfFilesChanged', this, this.onNumberOfFilesChanged);
     this.$element.on('gistify.tokenChanged', this, this.onTokenChanged);
     
@@ -356,8 +356,8 @@ Gist.prototype = {
     
     if(mode != 'create') {// in edit and show modes
       var editorMode = modelist.getModeForPath(file.filename);
-      editor.setValue(file.content, -1);
       editor.getSession().setMode(editorMode.mode);
+      editor.setValue(file.content, -1);
     }
     
     editor.setReadOnly(readonly);
@@ -382,7 +382,8 @@ Gist.prototype = {
       var httpMethod = gist.config.mode == 'create' ? 'post' : 'patch';
       var url = gist.config.mode == 'create' ? GIST_API_URL : GIST_API_URL + '/' + gist.config.gistId;
       
-      // TODO show loading
+      // show loading
+      var loadingGif = $(loadingHtml).appendTo(gist.$element);
 
       $.ajax({
         type: httpMethod,
@@ -431,7 +432,7 @@ Gist.prototype = {
           }
         },
         complete: function () {
-          // TODO remove loading
+          loadingGif.remove();
         }
       });
     }
@@ -500,7 +501,11 @@ Gist.prototype = {
 
   onFileNameChanged: function (e) {
     var gist = e.data;
-    debugger
+
+    e.target.value = e.target.value.trim();
+    var editorMode = modelist.getModeForPath(e.target.value);
+    var aceEditor = $.data($(e.target).closest('.gistify-file')[0], 'gistify-aceEditor');
+    aceEditor.getSession().setMode(editorMode.mode);
   },
 
   restoreToken: function () {

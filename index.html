@@ -60,13 +60,19 @@
 		<div id="target"></div>
 	</article>
 
+	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
+	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</p>
+
 
 </main>
 	<script type="text/javascript">
 
 		// Set example options
 		var exampleOptions = {
-			gistId: '0a20740f38b6bd8f2d6e',
+			gistId: 'cfef392d4e901d891e13',
 			mode: 'show', // first run: 'create' | 'show' | 'edit' # not first run: 'save' | 'get'
 			description: true,
 			theme: 'eclipse'
@@ -80,8 +86,9 @@
 			// need to reset the DOM object in order to re-initialize it from scratch
 			$('#target').replaceWith('<div id="target"></div>');
 
-			var options = JSON.parse($('#options').val());
-			$('#target').gistify(options);
+			var options = {};
+			eval('options.parsed = ' + $('#options').val())
+			$('#target').gistify(options.parsed);
 		});
 
 	</script>

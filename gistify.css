@@ -1,3 +1,8 @@
+.gistify-wrapper {
+  position: relative;
+  min-height: 64px;
+}
+
 .gistify-file {
   margin-bottom: 1em;
   font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
@@ -108,13 +113,23 @@ input.gistify-filename {
   width:36px;
 }
 
-.gistify-loading{
-  padding: 50px 10px;
+.gistify-loading {
   text-align: center;
+  position: absolute;
+  z-index: 5;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255,255,255,.7);
+  top: 0;
 }
 
-.gistify-loading > img{
+.gistify-loading > img {
   position: relative;
+}
+
+.gistify-footer + .gistify-loading {
+  height: calc(100%-(100px));
+  padding-top: 100px;
 }
 
 .gistify-footer {
