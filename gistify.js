@@ -547,7 +547,7 @@ Gist.prototype = {
 
     this.config.githubToken = localStorage.getItem('gistify.token');
 
-    this.config.githubToken = this.config.githubToken == 'null' ? undefined : this.config.githubToken;
+    this.config.githubToken = this.config.githubToken == 'undefined' ? undefined : this.config.githubToken;
     
     // This event would be missed because it's called from init() where
     // the rendering doesn't even start 
