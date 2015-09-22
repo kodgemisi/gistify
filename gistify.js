@@ -69,6 +69,7 @@ var FOOTER_TEMPLATE = '\
 <div class="gistify-footer">\
   <button class="gistify-new-btn gistify-btn">' + localize('New File') + ' </button>\
   <button class="gistify-token-btn gistify-btn">' + localize('Set Github token') + '&nbsp;&nbsp;&nbsp;<span class="octicon octicon-stop"></span></button>\
+  <a href="https://github.com/settings/tokens" target="_blank" title="Get token from Github" class="gistify-token-create gistify-btn"><span class="octicon gistify-icon-show octicon-shield"></span></a>\
   <a href="http://kodgemisi.github.io/gistify/token-help.html" target="_blank" title="Help about tokens" class="gistify-token-help gistify-btn"><span class="octicon gistify-icon-show octicon-light-bulb"></span></a>\
   <button class="gistify-save-btn gistify-btn gistify-btn-primary">{{action}}</button>\
 </div>'
