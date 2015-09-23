@@ -62,19 +62,43 @@
     </li>
   </ul>
 
-  <p>Here is a <a href="http://jsfiddle.net/" target="_blank">jsFiddle</a> for you to play around :)</p>
+  <p>Here is a <a href="http://jsfiddle.net/destan/shh5w6mz/" target="_blank">jsFiddle</a> for you to play around :)</p>
 
   <h2>Gistify in Action</h2>
 
   <strong>Examples</strong>
-  <ul>
-    <li><a href="#" data-usage="basicUsageCreateMode">Basic Usage Create Mode</a></li>
-    <li><a href="#" data-usage="basicUsageShowMode">Basic Usage Show Mode</a></li>
-    <li><a href="#" data-usage="basicUsageEditMode">Basic Usage Edit Mode</a></li>
-    <li><a href="#" data-usage="simpleShowMode">Simple Show Mode</a></li>
-    <li><a href="#" data-usage="showModeWithAttributes">Show Mode with Attributes</a></li>
-    <li><a href="#" data-usage="editModeWithAttributes">Edit Mode with Attributes</a></li>
-  </ul>
+  <table>
+    <tr>
+      <td>Javascript</td>
+      <td>Data attributes</td>
+    </tr>
+    <tr>
+      <td>
+        <ul>
+          <li><a href="#" data-usage="basicUsageCreateMode">Basic Usage Create Mode</a></li>
+          <li><a href="#" data-usage="basicUsageShowMode">Basic Usage Show Mode</a></li>
+          <li><a href="#" data-usage="basicUsageEditMode">Basic Usage Edit Mode</a></li>
+          <li><a href="#" data-usage="simpleShowMode">Simple Show Mode</a></li>
+          <li><a href="#" data-usage="showWithDescription">Show with Description</a></li>
+          <li><a href="#" data-usage="differentTheme">Different Theme</a></li>
+          <li><a href="#" data-usage="onlyOneFile">One File</a></li>
+        </ul>
+      </td>
+      <td>
+        <ul>
+          <li><a href="#" data-usage="basicUsageCreateMode">Basic Usage Create Mode</a></li>
+          <li><a href="#" data-usage="showModeWithAttributes">Basic Usage Show Mode</a></li>
+          <li><a href="#" data-usage="editModeWithAttributes">Basic Usage Edit Mode</a></li>
+          <li><a href="#" data-usage="simpleShowModeWithAttributes">Simple Show Mode</a></li>
+          <li><a href="#" data-usage="showWithDescriptionWithAttributes">Show with Description</a></li>
+          <li><a href="#" data-usage="differentThemeWithAttributes">Different Theme</a></li>
+          <li><a href="#" data-usage="onlyOneFileWithAttributes">One File</a></li>
+        </ul>
+      </td>
+    </tr>
+  </table>
+
+  <br>
 
   <article>
     <h3 id="js-usage">Usage: <span id="inputUsageTitle"></span></h3>
@@ -97,42 +121,72 @@
 
   <script type="text/javascript">
 
-    // // render <code> tags as code samples
-    // $('code').each(function () {
-    //   var s = '';
-    //   $(this).contents().each(function(i, data) {
-    //     s += data.nodeValue || data.outerHTML;
-    //   });
+    // render <code> tags as code samples
+    $('code').each(function () {
+      var s = '';
+      $(this).contents().each(function(i, data) {
+        s += data.nodeValue || data.outerHTML;
+      });
 
-    //   $(this).text(s);
-    // });
+      $(this).text(s);
+    });
 
     // Set example options
     var basicUsageCreateMode = {};
     var basicUsageCreateModeHtml = '<div id="target"></div>';
 
     var basicUsageShowMode = {
-      gistId: 'cfef392d4e901d891e13'
+      gistId: '5c7123b0bc5944b07c71'
     };
     var basicUsageShowModeHtml = '<div id="target"></div>';
 
     var basicUsageEditMode = {
-      gistId: 'cfef392d4e901d891e13',
+      gistId: '5c7123b0bc5944b07c71',
       mode: 'edit'
     };
     var basicUsageEditModeHtml = '<div id="target"></div>';
 
     var simpleShowMode = {
-      gistId: 'cfef392d4e901d891e13',
+      gistId: '5c7123b0bc5944b07c71',
       showSimple: true
     };
     var simpleShowModeHtml = '<div id="target"></div>';
 
     var showModeWithAttributes = {};
-    var showModeWithAttributesHtml = '<div id="target" data-gist-id="cfef392d4e901d891e13"></div>';
+    var showModeWithAttributesHtml = '<div id="target" data-gist-id="5c7123b0bc5944b07c71"></div>';
 
     var editModeWithAttributes = {};
-    var editModeWithAttributesHtml = '<div id="target" data-gist-id="cfef392d4e901d891e13" data-gistify-mode="edit"></div>';
+    var editModeWithAttributesHtml = '<div id="target" data-gist-id="5c7123b0bc5944b07c71" data-gistify-mode="edit"></div>';
+
+    var simpleShowModeWithAttributes = {};
+    var simpleShowModeWithAttributesHtml = '<div id="target" data-gist-id="5c7123b0bc5944b07c71" data-gistify-simple="true"></div>';
+    
+    var showWithDescription = {
+      gistId: '5c7123b0bc5944b07c71',
+      description: true
+    };
+    var showWithDescriptionHtml = '<div id="target"></div>';
+    
+    var showWithDescriptionWithAttributes = {};
+    var showWithDescriptionWithAttributesHtml = '<div id="target" data-gist-id="5c7123b0bc5944b07c71" data-gistify-description="true"></div>';
+
+    var differentTheme = {
+      gistId: '5c7123b0bc5944b07c71',
+      theme: 'eclipse'
+    };
+    var differentThemeHtml = '<div id="target"></div>';
+
+    var differentThemeWithAttributes = {};
+    var differentThemeWithAttributesHtml = '<div id="target" data-gist-id="5c7123b0bc5944b07c71" data-gistify-theme="eclipse"></div>';
+
+    var onlyOneFile = {
+      gistId: '5c7123b0bc5944b07c71',
+      files: 'gistify-possible-attributes.md'
+    };
+    var onlyOneFileHtml = '<div id="target"></div>';
+
+    var onlyOneFileWithAttributes = {};
+    var onlyOneFileWithAttributesHtml = '<div id="target" data-gist-id="5c7123b0bc5944b07c71" data-gistify-files="gistify-possible-attributes.md"></div>';
 
     // click event bindings
     $('a[data-usage]').click(function (e) {

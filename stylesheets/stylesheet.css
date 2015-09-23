@@ -412,3 +412,11 @@ span.var {
   position: relative;
   margin-left: 3px;
 }
+
+td ul li {
+  text-align: left;
+}
+
+td {
+  border: 1px solid #ccc;
+}
