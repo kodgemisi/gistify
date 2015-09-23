@@ -74,16 +74,6 @@ var FOOTER_TEMPLATE = '\
   <button class="gistify-save-btn gistify-btn gistify-btn-primary">{{action}}</button>\
 </div>'
 
-var GITHUB_GIST_EMBED_TEMPLATE = '<script src="https://gist.github.com/{{id}}.js"></script>';
-
-// CSS injection
-if($('#gistify-style').length == 0){
-  $('<link id="gistify-style" rel="stylesheet" type="text/css" href="' + cssUrl + '"></link>').appendTo('head');
-}
-else{
-  console.warn('An element with id "#gistify-style" is already present, gistify stylesheet won\'t be loaded!');
-}
-
 // Load ace if not defined
 if(!aceIsAvailable){
   $.ajax({
