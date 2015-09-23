@@ -12,7 +12,9 @@
     <![endif]-->
     <title>Gistify in Action</title>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
-    <script src="gistify.js"></script>
+    <script src="https://cdn.rawgit.com/kodgemisi/gistify/dev-init/dist/gistify.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdn.rawgit.com/kodgemisi/gistify/dev-init/dist/gistify.css">
 
     <style type="text/css">
       code {
@@ -66,105 +68,105 @@
 
   <strong>Examples</strong>
   <ul>
-    <li><a href="#basic-usage">Basic Usage</a></li>
-    <li><a href="#js-usage">Javascript Options Usage</a></li>
-    <li><a href="#data-attributes">HTML Data Attributes Usage</a></li>
-    <li><a href="#create-usage">Creating a new gist</a></li>
-    <li><a href="#edit-usage">Editing your gist</a></li>
+    <li><a href="#" data-usage="basicUsageCreateMode">Basic Usage Create Mode</a></li>
+    <li><a href="#" data-usage="basicUsageShowMode">Basic Usage Show Mode</a></li>
+    <li><a href="#" data-usage="basicUsageEditMode">Basic Usage Edit Mode</a></li>
+    <li><a href="#" data-usage="simpleShowMode">Simple Show Mode</a></li>
+    <li><a href="#" data-usage="showModeWithAttributes">Show Mode with Attributes</a></li>
+    <li><a href="#" data-usage="editModeWithAttributes">Edit Mode with Attributes</a></li>
   </ul>
 
   <article>
-    <h3 id="basic-usage">Basic Usage</h3>
-    <code>
-HTML
--------
-<div id="target1" data-gist-id="0a20740f38b6bd8f2d6e"></div>
+    <h3 id="js-usage">Usage: <span id="inputUsageTitle"></span></h3>
+    <span class="var">var options = </span>
+    <textarea id="optionsInput"></textarea><br>
 
-JS
--------
-$('#target1').gistify();
-    </code>
-    <button id="btn1">Show Basic Usage</button>
+    <span class="var">HTML: </span>
+    <textarea id="html"></textarea>
+
+    <span class="var">JS: </span>
+    <textarea id="js" readonly>$('#target').gistify(options);</textarea>
+
+    <button id="showBtn">Show Example Output</button>
     <hr>
 
-    <div id="target1" data-gist-id="0a20740f38b6bd8f2d6e"></div>
-  </article>
+    <h3>Showing example output: <span id="renderedTitle"></span></h3>
 
-  <article>
-    <h3 id="js-usage">Javascript Options Usage</h3>
-    <code>
-HTML
--------
-<div id="target2"></div>
-
-JS
--------
-$('#target2').gistify(parsedOptions);
-    </code>
-    <label>Options</label><br>
-    <textarea id="options1" class="oneThirdWith"></textarea><br>
-    <button id="btn2">Show Javascript Options Usage</button>
-    <hr>
-
-    <div id="target2"></div>
-  </article>
-
-  <article>
-    <h3 id="data-attributes">HTML Data Attributes Usage</h3>
-    <code>
-HTML
--------
-<div id="target3" data-gist-id="0a20740f38b6bd8f2d6e"></div>
-
-JS
--------
-$('#target3').gistify();
-    </code>
-    <button id="btn3">Show Data Attributes Usage</button>
-    <hr>
-
-    <div id="target3" data-gist-id="0a20740f38b6bd8f2d6e"></div>
+    <div id="target"></div>
   </article>
 
   <script type="text/javascript">
 
-    // render <code> tags as code samples
-    $('code').each(function () {
-      var s = '';
-      $(this).contents().each(function(i, data) {
-        s += data.nodeValue || data.outerHTML;
-      });
+    // // render <code> tags as code samples
+    // $('code').each(function () {
+    //   var s = '';
+    //   $(this).contents().each(function(i, data) {
+    //     s += data.nodeValue || data.outerHTML;
+    //   });
 
-      $(this).text(s);
-    });
+    //   $(this).text(s);
+    // });
 
     // Set example options
-    var exampleOptions = {
-      gistId: '0a20740f38b6bd8f2d6e',
-      mode: 'show', // first run: 'create' | 'show' | 'edit' # not first run: 'save' | 'get'
-      description: true,
-      theme: 'eclipse'
+    var basicUsageCreateMode = {};
+    var basicUsageCreateModeHtml = '<div id="target"></div>';
+
+    var basicUsageShowMode = {
+      gistId: 'cfef392d4e901d891e13'
     };
-    $('#options1')
-      .val(JSON.stringify(exampleOptions, null, '  '))
-      .css('height', $('#options1')[0].scrollHeight+'px');
+    var basicUsageShowModeHtml = '<div id="target"></div>';
+
+    var basicUsageEditMode = {
+      gistId: 'cfef392d4e901d891e13',
+      mode: 'edit'
+    };
+    var basicUsageEditModeHtml = '<div id="target"></div>';
+
+    var simpleShowMode = {
+      gistId: 'cfef392d4e901d891e13',
+      showSimple: true
+    };
+    var simpleShowModeHtml = '<div id="target"></div>';
+
+    var showModeWithAttributes = {};
+    var showModeWithAttributesHtml = '<div id="target" data-gist-id="cfef392d4e901d891e13"></div>';
+
+    var editModeWithAttributes = {};
+    var editModeWithAttributesHtml = '<div id="target" data-gist-id="cfef392d4e901d891e13" data-gistify-mode="edit"></div>';
 
     // click event bindings
-    $('#btn1').click(function() {
-      $('#target1').gistify();
+    $('a[data-usage]').click(function (e) {
+      e.preventDefault();
+
+      var usageName = $(this).data('usage');
+      var options = eval(usageName);
+
+      $('#optionsInput')
+        .css('height', 0 + 'px')
+        .val(JSON.stringify(options, null, '  '))
+        .css('height', ($('#optionsInput')[0].scrollHeight + 10) + 'px');
+
+      $('#html').val(eval(usageName + 'Html'));
+
+      $('#inputUsageTitle').text($(this).text());
+
+      return false;
     });
 
-    $('#btn2').click(function() {
+    $('#showBtn').click(function() {
+      var options;
+      eval('options=' + $('#optionsInput').val());
+
       // need to reset the DOM object in order to re-initialize it from scratch
-      $('#target2').replaceWith('<div id="target2"></div>');
+      $('#target').replaceWith($('#html').val());
 
-      var options = JSON.parse($('#options1').val());
-      $('#target2').gistify(options);
+      $('#target').gistify(options);
+
+      $('#renderedTitle').text($('#inputUsageTitle').text());
     });
 
-    $('#btn3').click(function() {
-      $('#target3').gistify();
-    });
+    $('a[data-usage="basicUsageCreateMode"]').click();
+
   </script>
         </section>
 
@@ -172,7 +174,6 @@ $('#target3').gistify();
           Gistify is maintained by <a href="https://github.com/kodgemisi">kodgemisi</a><br>
           This page was generated by <a href="https://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
         </footer>
-
         
       </div>
     </div>
