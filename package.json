@@ -1,9 +1,9 @@
 {
   "name": "gistify",
-  "description": "jQuery plugin to center an image outside of a container",
+  "description": "jQuery plugin to embed, create and edit Github gists",
   "version": "1.0.0",
-  "author": "Eric Barnes <eric@ericlbarnes.com>",
-  "homepage": "http://ericlbarnes.com/",
+  "author": "Kod Gemisi Ltd. <selam@kodgemisi.com>",
+  "homepage": "http://kodgemisi.com/",
   "main": "dist/gistify.js",
   "repository": "https://github.com/kodgemisi/gistify",
   "keywords": [
