@@ -133,6 +133,7 @@ function Gist(element, options) {
   this.metadata.width = this.$target.data("gistify-width");
   this.metadata.height = this.$target.data("gistify-height");
   this.metadata.files = this.$target.data("gistify-files");
+  this.metadata.showSimple = this.$target.data("gistify-simple");
 }
 
 Gist.prototype = {
