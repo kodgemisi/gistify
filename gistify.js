@@ -149,7 +149,9 @@ Gist.prototype = {
       maxLines: Infinity,
       fontFamily: 'Consolas, "Liberation Mono", Menlo, Courier, monospace',
       fontSize: '12px'
-    }
+    },
+    onGistCreated: null,
+    onGistUpdated: null
   },
 
   availableCommands: ['save', 'edit'],
@@ -426,9 +428,20 @@ Gist.prototype = {
           // if the gist is created then re-render in edit mode
           if(gist.config.mode == 'create') {
             gist.config.mode = 'edit';
+
+            // invoke onGistCreated callback if defined
+            if(typeof gist.config.onGistCreated == 'function') {
+              gist.config.onGistCreated.call(gist, data);
+            }
+
             alert(localize('Gist created.'));
           }
           else {
+            // invoke onGistUpdated callback if defined
+            if(typeof gist.config.onGistUpdated == 'function') {
+              gist.config.onGistUpdated.call(gist, data);
+            }
+
             alert(localize('Gist updated.'));
           }
          
