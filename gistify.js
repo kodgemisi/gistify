@@ -196,7 +196,7 @@ Gist.prototype = {
 
     // set minLines property for 'create' and 'edit' modes
     if(this.config.mode != 'show') {
-      this.config.aceOptions.minLines = 13;
+      this.config.aceOptions.minLines = 13; // 13 is Github's default
     }
 
     // have files option as array in all times
