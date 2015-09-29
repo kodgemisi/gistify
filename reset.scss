@@ -1,11 +1,11 @@
-a,
-a:hover,
-a:active,
-a:visited {
+ul li a,
+ul li a:hover,
+ul li a:active,
+ul li a:visited {
   text-decoration: none;
   outline: none;
   color: inherit;
-  border: 0 !important; /* A must to override Wordpress 2015 theme */
+  border: 0;
 }
 
 * {
