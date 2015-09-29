@@ -115,7 +115,7 @@ function Gist(element, options) {
   this.$target = $(element);
 
   // Keep target element intact and use an inner div as main element
-  this.$element = $('<div class="gistify-wrapper">').appendTo($(element).empty());
+  this.$element = $('<div class="gistify-wrapper">').appendTo(this.$target.empty());
   this.element = this.$element[0];
   
   this.options = options;
@@ -182,7 +182,7 @@ Gist.prototype = {
 
     // Introduce defaults that can be extended either
     // globally or using an object literal.
-    this.config = $.extend(this.config, this.defaults, this.options, this.metadata);
+    this.config = $.extend(true, this.config, this.defaults, this.options, this.metadata);
 
     // set default mode
     if(!this.config.mode){
@@ -631,7 +631,7 @@ $['gistify'] = $.fn['gistify'] = function (options) {
 
     // If called as `$.gistify({option: value})` extend/override default options
     if(!(this instanceof $)) {
-      $.extend(Gist.prototype.defaults, options);
+      $.extend(true, Gist.prototype.defaults, options);
     }
 
     return this.each(function () {
