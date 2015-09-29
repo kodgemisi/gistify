@@ -1,0 +1,14 @@
+a,
+a:hover,
+a:active,
+a:visited {
+  text-decoration: none;
+  outline: none;
+  color: inherit;
+  border: 0 !important; /* A must to override Wordpress 2015 theme */
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}

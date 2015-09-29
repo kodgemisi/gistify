@@ -4,21 +4,7 @@
   position: relative;
   min-height: 64px;
 
-
-  a,
-  a:hover,
-  a:active,
-  a:visited {
-    text-decoration: none;
-    outline: none;
-    color: inherit;
-    border-bottom: 0;
-  }
-
-  * {
-    padding: 0;
-    margin: 0;
-  }
+  @import 'reset';
 
   .ace_gutter-cell {
     padding-left: 10px !important;
