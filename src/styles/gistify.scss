@@ -1,0 +1,241 @@
+@import 'octicon';
+
+.gistify-wrapper {
+  position: relative;
+  min-height: 64px;
+
+  @import 'reset';
+
+  .ace_gutter-cell {
+    padding-left: 10px !important;
+  }
+
+  .ace_gutter-cell.ace_info {
+    background-position: -3px center !important;
+  }
+
+  .ace_gutter-cell.ace_error {
+    background-position: -1px center !important;
+    background-size: 13px 13px !important;
+  }
+
+  .gistify-file {
+    margin-bottom: 1em;
+    font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+    border: 1px solid #ddd;
+    border-bottom: 1px solid #ccc;
+    border-radius: 3px;
+  }
+
+  textarea.gistify-gist-desc {
+    min-height: 34px;
+    padding: 7px 8px;
+    font-size: 13px;
+    color: #333;
+    vertical-align: middle;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  div.gistify-gist-desc {
+    font-family: Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-size: 16px;
+    color: #666;
+    margin-bottom: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .gistify-file-header {
+    font: 12px Consolas, 'Liberation Mono', Menlo, Courier, monospace;
+    color: #767676;
+    padding: 0 0 0 10px;
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d8d8d8;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    height: 34px;
+    line-height: 38px;
+  }
+
+  .gistify-file-header-edit {
+    background-color: #f7f7f7;
+    border-bottom: 1px solid #d8d8d8;
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px;
+    font-family: Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-size: 13px;
+  }
+
+  .gistify-file-header-edit > .gistify-button-group{
+    line-height: 43px;
+  }
+
+  .gistify-file-header-edit > span {
+    display: inline-block;
+    padding: 5px 0 5px 10px;
+    font-size: 0;
+  }
+
+  input.gistify-filename {
+    padding: 7px 8px;
+    font-size: 13px;
+    color: #333;
+    vertical-align: middle;
+    background-color: #fff;
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    outline: none;
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.075);
+    width: 250px;
+  }
+
+  .gistify-button-group {
+    display:inline-block;
+    font-family:Helvetica, arial, freesans, clean, sans-serif;
+    font-size:12px;
+    height:34px;
+    line-height:34px;
+    margin:0;
+    padding:0;
+    vertical-align:middle;
+    width:74px;
+    float: right;
+  }
+
+  .gistify-button-group a,.gistify-button-group a:hover,.gistify-button-group a:visited,.gistify-button-group a:active {
+    color:#333;
+  }
+
+  .gistify-button-group a[href="#"] {
+    pointer-events: none;
+    cursor: default;
+  }
+
+  .gistify-button-group li {
+    border-left:1px solid #d8d8d8;
+    float:left;
+    list-style-type:none;
+    width:36px;
+  }
+
+  .gistify-loading {
+    text-align: center;
+    position: absolute;
+    z-index: 5;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255,255,255,.7);
+    top: 0;
+  }
+
+  .gistify-loading > img {
+    position: relative;
+  }
+
+  .gistify-footer + .gistify-loading {
+    height: calc(100%-(100px));
+    padding-top: 100px;
+  }
+
+  .gistify-footer {
+
+  }
+
+  .gistify-btn {
+    position: relative;
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 20px;
+    color: #333;
+    font-family: Helvetica, arial, nimbussansl, liberationsans, freesans, clean, sans-serif, 'Segoe UI Emoji', 'Segoe UI Symbol';
+    font-size: 13px;
+    white-space: nowrap;
+    vertical-align: middle;
+    cursor: pointer;
+    background-color: #eee;
+    background-image: -webkit-linear-gradient(#fcfcfc, #eee);
+    background-image: linear-gradient(#fcfcfc, #eee);
+    border: 1px solid #d5d5d5;
+    border-radius: 3px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    -webkit-appearance: none;
+  }
+
+  .gistify-btn-primary {
+    color: #fff;
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.15);
+    background-color: #60b044;
+    background-image: -webkit-linear-gradient(#8add6d, #60b044);
+    background-image: linear-gradient(#8add6d, #60b044);
+    border-color: #5ca941;
+    float: right;
+  }
+
+  .gistify-btn:hover{
+    text-decoration: none;
+    background-color: #ddd;
+    background-image: -webkit-linear-gradient(#eee, #ddd);
+    background-image: linear-gradient(#eee, #ddd);
+    border-color: #ccc;
+  }
+
+  .gistify-btn-primary:hover{
+    color: #fff;
+    background-color: #569e3d;
+    background-image: -webkit-linear-gradient(#79d858, #569e3d);
+    background-image: linear-gradient(#79d858, #569e3d);
+    border-color: #4a993e;
+  }
+
+  .gistify-remove-btn {
+    height: 31px;
+    margin-left: -4px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    float: right;
+  }
+
+  .gistify-remove-btn:hover {
+    color: #fff;
+    background-color: #b33630;
+    background-image: -webkit-linear-gradient(#dc5f59, #b33630);
+    background-image: linear-gradient(#dc5f59, #b33630);
+    /*border-color: #cd504a;*/
+  }
+
+  .gistify-404 {
+    text-align: center;
+    background-color: #f1f1f1;
+    border-radius: 3px;
+  }
+
+  .gistify-button-group .octicon  {
+    margin-left: 10px;
+  }
+
+  .gistify-token-help {
+    margin-left: -7px;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+  .mini-icon-remove {
+    padding: 0;
+  }
+}/*gistify-wrapper*/

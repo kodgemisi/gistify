@@ -6,7 +6,7 @@ import {stream as wiredep} from 'wiredep';
 const $ = gulpLoadPlugins();
 
 gulp.task('styles', () => {
-  return gulp.src('./*.scss')
+  return gulp.src('src/styles/gistify.scss')
     .pipe($.plumber())
     .pipe($.sourcemaps.init())
     .pipe($.sass.sync({
@@ -15,23 +15,21 @@ gulp.task('styles', () => {
       includePaths: ['.']
     }).on('error', $.sass.logError))
     .pipe($.sourcemaps.write())
-    .pipe(gulp.dest('.tmp/'))
-});
-
-gulp.task('html', ['styles'], () => {
-
-  return gulp.src(['./gistify.js', '.tmp/gistify.css'])
-    .pipe($.if('*.js', $.uglify()))
-    .pipe($.if('*.css', $.minifyCss({compatibility: '*'})))
-    .pipe($.if('*.html', $.minifyHtml({conditionals: true, loose: true})))
+    .pipe($.minifyCss({compatibility: '*'}))
     .pipe(gulp.dest('dist'));
 });
 
-gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
+gulp.task('js', () => {
+  return gulp.src(['src/js/gistify.js', 'src/js/modeList.js'])
+    .pipe($.uglify())
+    .pipe($.concat('gistify.js'))
+    .pipe(gulp.dest('dist'));
+});
 
-gulp.task('build', ['styles', 'html'], () => {
+gulp.task('clean', del.bind(null, ['dist']));
+
+gulp.task('build', ['styles', 'js'], () => {
   var ret = gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
-  del('.tmp');
   return ret;
 });
 

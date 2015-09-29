@@ -1,0 +1,15 @@
+ul li a,
+ul li a:hover,
+ul li a:active,
+ul li a:visited {
+  text-decoration: none;
+  outline: none;
+  color: inherit;
+  border: 0;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+  text-transform: none;
+}
